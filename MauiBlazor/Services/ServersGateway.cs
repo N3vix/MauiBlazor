@@ -9,7 +9,8 @@ internal class ServersGateway : IServersGateway
         Servers = Enumerable.Range(1, 20).Select(x => new ServerDetails()
         {
             Id = $"Server{x}",
-            Name = $"Server {x}"
+            Name = $"Server {x}",
+            ChannelIds = [$"TC{x * 2}", $"TC20{x * 2}", $"VC{x * 2}"]
         }).ToArray();
     }
 

@@ -1,4 +1,4 @@
-@page "/{Id}"
+@page "/channels/{Id}"
 
 @using MauiBlazor.Components.Layout
 @using MauiBlazor.Services
@@ -8,28 +8,21 @@
 @inject IAuthorisationService AuthorisationService
 @inject IServersGateway ServersGateway
 
-@if (string.IsNullOrEmpty(Id) || ServerDetails == null)
-{
-    <h1>Loading...</h1>
-}
-else
-{
-    <MauiBlazor.Components.Layout.ServerNavMenu ServerDetails="@ServerDetails"/>
-}
-
 @code {
-
+    private string _id;
     [Parameter]
     public string Id { get; set; }
-
-    private ServerDetails ServerDetails { get; set; }
 
     [CascadingParameter]
     public ServerLayout Layout { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        ServerDetails = await ServersGateway.GetServer(Id);
-        Layout.ServerDetails = ServerDetails;
+        if (_id != Id)
+        {
+            Layout.ServerDetails = await ServersGateway.GetServer(Id);
+            _id = Id;
+            StateHasChanged();
+        }
     }
 }

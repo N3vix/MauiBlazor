@@ -28,11 +28,11 @@ else
             }
             else
             {
-                @foreach (var server in Channels)
+                @foreach (var channel in Channels)
                 {
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="@server.Id">
-                            <span class="bi" aria-hidden="true"></span> @server.Name
+                        <NavLink class="nav-link" href="@($"channel/{ServerDetails.Id}/{channel.Id}")">
+                            <span class="bi" aria-hidden="true"></span> @channel.Name
                         </NavLink>
                     </div>
                 }
@@ -42,13 +42,23 @@ else
 }
 
 @code {
-    [Parameter]
+    private ServerDetails _serverDetails;
+    [CascadingParameter]
     public ServerDetails ServerDetails { get; set; }
 
-    private ChannelDetails[] Channels { get; set; }
+    private ChannelDetails[] Channels { get; set; } = [];
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        Channels = await ChannelsGateway.GetChannels(ServerDetails.ChannelIds);
+        if (_serverDetails != ServerDetails)
+        {
+            Channels = [];
+            if (ServerDetails != null)
+            {
+                Channels = await ChannelsGateway.GetChannels(ServerDetails.ChannelIds);
+                _serverDetails = ServerDetails;
+            }
+            StateHasChanged();
+        }
     }
 }

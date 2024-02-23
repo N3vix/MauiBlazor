@@ -4,16 +4,10 @@
 @layout MainLayout
 
 <CascadingValue Value="this">
-    @if (ServerDetails == null)
-    {
-        <h1>Loading...</h1>
-    }
-    else
-    {
-
+    <CascadingValue Value="@ServerDetails">
         <div class="page">
             <div class="sidebar">
-                <MauiBlazor.Components.Layout.ServerNavMenu ServerDetails="@ServerDetails" />
+                <MauiBlazor.Components.Layout.ServerNavMenu />
             </div>
 
             <main>
@@ -22,11 +16,19 @@
                 </article>
             </main>
         </div>
-    }
+    </CascadingValue>
 </CascadingValue>
 
 @code
 {
-    [Parameter]
-    public ServerDetails ServerDetails { get; set; }
+    private ServerDetails _serverDetails;
+    public ServerDetails ServerDetails
+    {
+        get => _serverDetails;
+        set
+        {
+            _serverDetails = value;
+            StateHasChanged();
+        }
+    }
 }

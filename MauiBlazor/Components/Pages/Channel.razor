@@ -1,0 +1,24 @@
+﻿@page "/channel/{ServerId}/{ChannelId}"
+
+@using MauiBlazor.Components.Layout
+@using MauiBlazor.Services
+
+@layout ServerLayout
+
+@if (string.IsNullOrEmpty(ServerId) || string.IsNullOrEmpty(ChannelId) || ServerDetails == null)
+{
+    <h1>Loadin`1231g...</h1>
+}
+else
+{
+    <h1>@ServerId @ChannelId @ServerDetails.Id</h1>
+}
+
+@code {
+    [Parameter]
+    public string ServerId { get; set; }
+    [Parameter]
+    public string ChannelId { get; set; }
+    [CascadingParameter]
+    public ServerDetails ServerDetails { get; set; }
+}
