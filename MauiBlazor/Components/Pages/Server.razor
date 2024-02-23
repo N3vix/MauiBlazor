@@ -1,0 +1,35 @@
+@page "/{Id}"
+
+@using MauiBlazor.Components.Layout
+@using MauiBlazor.Services
+
+@layout ServerLayout
+
+@inject IAuthorisationService AuthorisationService
+@inject IServersGateway ServersGateway
+
+@if (string.IsNullOrEmpty(Id) || ServerDetails == null)
+{
+    <h1>Loading...</h1>
+}
+else
+{
+    <MauiBlazor.Components.Layout.ServerNavMenu ServerDetails="@ServerDetails"/>
+}
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    private ServerDetails ServerDetails { get; set; }
+
+    [CascadingParameter]
+    public ServerLayout Layout { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ServerDetails = await ServersGateway.GetServer(Id);
+        Layout.ServerDetails = ServerDetails;
+    }
+}

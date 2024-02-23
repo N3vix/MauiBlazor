@@ -1,0 +1,9 @@
+﻿@page "/"
+
+@using MauiBlazor.Services
+
+@inject IAuthorisationService AuthorisationService
+
+<h1>Hello, @AuthorisationService.AuthorisedUser.Name!</h1>
+
+<p>Welcome to your new app.</p>

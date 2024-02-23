@@ -1,0 +1,32 @@
+﻿@using MauiBlazor.Services
+
+@inherits LayoutComponentBase
+@layout MainLayout
+
+<CascadingValue Value="this">
+    @if (ServerDetails == null)
+    {
+        <h1>Loading...</h1>
+    }
+    else
+    {
+
+        <div class="page">
+            <div class="sidebar">
+                <MauiBlazor.Components.Layout.ServerNavMenu ServerDetails="@ServerDetails" />
+            </div>
+
+            <main>
+                <article class="content px-4">
+                    @Body
+                </article>
+            </main>
+        </div>
+    }
+</CascadingValue>
+
+@code
+{
+    [Parameter]
+    public ServerDetails ServerDetails { get; set; }
+}

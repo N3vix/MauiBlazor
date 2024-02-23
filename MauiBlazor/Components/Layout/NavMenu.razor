@@ -1,0 +1,76 @@
+﻿@using MauiBlazor.Services
+
+@inject IAuthorisationService AuthorizationServise
+@inject IServersGateway ServerGateway
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">MauiBlazor</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        @if (Servers == null)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link disabled">
+                    <span class="bi" aria-hidden="true"></span> Loading...
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            @foreach (var server in Servers)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@server.Id">
+                        <span class="bi" aria-hidden="true"></span> @server.Name
+                    </NavLink>
+                </div>
+            }
+        }
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="weather">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private ServerNavItem[]? Servers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var serverIds = AuthorizationServise.AuthorisedUser.Servers;
+        var servers = await ServerGateway.GetServers(serverIds);
+        Servers = servers.Select(x => new ServerNavItem
+            {
+                Name = x.Name,
+                Link = "",
+                Id = x.Id,
+            }).ToArray();
+    }
+
+    private class ServerNavItem
+    {
+        public string Name { get; set; }
+
+        public string Link { get; set; }
+
+        public string Id { get; set; }
+    }
+}
