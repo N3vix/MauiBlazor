@@ -20,6 +20,7 @@
     {
         if (_id != Id)
         {
+            if (Layout.ServerDetails != null) Layout.ServerDetails = null;
             Layout.ServerDetails = await ServersGateway.GetServer(Id);
             _id = Id;
             StateHasChanged();
