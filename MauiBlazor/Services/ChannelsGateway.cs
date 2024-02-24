@@ -1,4 +1,7 @@
-﻿namespace MauiBlazor.Services;
+﻿using Models;
+
+namespace MauiBlazor.Services;
+
 internal class ChannelsGateway : IChannelsGateway
 {
     private ChannelDetails[] Channels { get; set; }

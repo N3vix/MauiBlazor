@@ -27,8 +27,9 @@ public class ServersController : ControllerBase
     }
 
     [HttpGet("[action]")]
-    public IEnumerable<ServerDetails> GetServers([FromQuery] string[] ids)
+    public IEnumerable<ServerDetails> GetServers([FromQuery] string idsCsv)
     {
+        var ids = idsCsv.Split(',');
         return ids
             .Select(x => Servers.FirstOrDefault(server => server.Id.Equals(x, StringComparison.Ordinal)))
             .Where(x => x != null)

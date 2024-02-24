@@ -1,4 +1,6 @@
-﻿namespace MauiBlazor.Services;
+﻿using Models;
+
+namespace MauiBlazor.Services;
 
 internal interface IWeatherForecastService
 {
