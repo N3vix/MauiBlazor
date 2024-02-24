@@ -1,6 +1,6 @@
-﻿namespace MauiBlazor.Services;
+﻿namespace Models;
 
-internal class AuthorisedUser
+public class AuthorisedUser
 {
     public string Id { get; }
 

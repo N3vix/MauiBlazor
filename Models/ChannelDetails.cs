@@ -1,13 +1,13 @@
-﻿namespace MauiBlazor.Services;
+﻿namespace Models;
 
-internal class ChannelDetails
+public class ChannelDetails
 {
     public string Id { get; set; }
     public string Name { get; set; }
     public ChannelType Type { get; set; }
 }
 
-internal enum ChannelType
+public enum ChannelType
 {
     Text,
     Voice

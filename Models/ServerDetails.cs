@@ -1,4 +1,4 @@
-﻿namespace MauiBlazor.Services;
+﻿namespace Models;
 
 public class ServerDetails
 {

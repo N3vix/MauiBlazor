@@ -1,13 +1,23 @@
-﻿using Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Models;
+using RESTfulAPI.Controllers;
 
 namespace MauiBlazor.Services;
 
-internal class ServersGateway : IServersGateway
+[ApiController]
+[Route("[controller]")]
+public class ServersController : ControllerBase
 {
+    private readonly ILogger<ServersController> _logger;
+
+
     private ServerDetails[] Servers { get; set; }
 
-    public ServersGateway()
+
+    public ServersController(ILogger<ServersController> logger)
     {
+        _logger = logger;
+
         Servers = Enumerable.Range(1, 20).Select(x => new ServerDetails()
         {
             Id = $"Server{x}",
@@ -16,20 +26,18 @@ internal class ServersGateway : IServersGateway
         }).ToArray();
     }
 
-    public async Task<ServerDetails[]> GetServers(string[] ids)
+    [HttpGet("[action]")]
+    public IEnumerable<ServerDetails> GetServers([FromQuery] string[] ids)
     {
-        await Task.Delay(500);
-
         return ids
             .Select(x => Servers.FirstOrDefault(server => server.Id.Equals(x, StringComparison.Ordinal)))
             .Where(x => x != null)
             .ToArray();
     }
 
-    public async Task<ServerDetails> GetServer(string id)
+    [HttpGet("[action]")]
+    public ServerDetails GetServer([FromQuery] string id)
     {
-        await Task.Delay(500);
-
         return Servers.FirstOrDefault(server => server.Id.Equals(id, StringComparison.Ordinal));
     }
 }
