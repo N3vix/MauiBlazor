@@ -32,7 +32,7 @@ else
                 @foreach (var channel in Channels)
                 {
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="@($"channel/{ServerDetails.Id}/{channel.Id}")">
+                        <NavLink class="nav-link" href="@($"channel/{ServerDetails.ServerId}/{channel.Id}")">
                             <span class="bi" aria-hidden="true"></span> @channel.Name
                         </NavLink>
                     </div>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
+using RESTfulAPI;
 using RESTfulAPI.Controllers;
 
 namespace MauiBlazor.Services;
@@ -8,38 +9,26 @@ namespace MauiBlazor.Services;
 [Route("[controller]")]
 public class ServersController : ControllerBase
 {
-    private readonly ILogger<ServersController> _logger;
+    private ILogger<ServersController> Logger { get; }
+    private IServersGateway ServersGateway { get; }
 
-
-    private ServerDetails[] Servers { get; set; }
-
-
-    public ServersController(ILogger<ServersController> logger)
+    public ServersController(ILogger<ServersController> logger, IServersGateway serversGateway)
     {
-        _logger = logger;
-
-        Servers = Enumerable.Range(1, 20).Select(x => new ServerDetails()
-        {
-            Id = $"Server{x}",
-            Name = $"Server {x}",
-            ChannelIds = [$"TC{x * 2}", $"TC20{x * 2}", $"VC{x * 2}"]
-        }).ToArray();
+        Logger = logger;
+        ServersGateway = serversGateway;
     }
 
     [HttpGet("[action]")]
-    public IEnumerable<ServerDetails> GetServers([FromQuery] string idsCsv = null)
+    public async Task<IEnumerable<ServerDetails>> GetServers([FromQuery] string idsCsv = null)
     {
-        if (string.IsNullOrEmpty(idsCsv)) return Servers;
+        if (string.IsNullOrEmpty(idsCsv)) return await ServersGateway.GetAll();
         var ids = idsCsv.Split(',');
-        return ids
-            .Select(x => Servers.FirstOrDefault(server => server.Id.Equals(x, StringComparison.Ordinal)))
-            .Where(x => x != null)
-            .ToArray();
+        return await ServersGateway.GetByServerId(ids);
     }
 
     [HttpGet("[action]")]
-    public ServerDetails GetServer([FromQuery] string id)
+    public async Task<ServerDetails> GetServer([FromQuery] string id)
     {
-        return Servers.FirstOrDefault(server => server.Id.Equals(id, StringComparison.Ordinal));
+        return await ServersGateway.GetByServerId(id);
     }
 }
