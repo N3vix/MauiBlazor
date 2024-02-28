@@ -14,7 +14,7 @@ public class ServersGateway : IServersGateway
 
     public async Task Add(params ServerDetails[] serverDetails)
     {
-        if (serverDetails == null) throw new ArgumentNullException(nameof(serverDetails));
+        ArgumentNullException.ThrowIfNull(serverDetails);
 
         await ServersContext.ServersDetails.AddRangeAsync(serverDetails);
         await ServersContext.SaveChangesAsync();
@@ -27,24 +27,22 @@ public class ServersGateway : IServersGateway
 
     public async Task<ServerDetails[]> GetByServerId(string[] ids)
     {
-        if (ids == null) throw new ArgumentNullException(nameof(ids));
+        ArgumentNullException.ThrowIfNull(ids);
 
         return await ServersContext.ServersDetails.Where(x => ids.Contains(x.ServerId)).ToArrayAsync();
     }
 
     public async Task<ServerDetails> GetByServerId(string id)
     {
-        if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
+        ArgumentNullException.ThrowIfNullOrEmpty(id);
 
-        var s = await ServersContext.ServersDetails
-            .FirstOrDefaultAsync(x => x.ServerId.Equals(id));
-        return s;
+        return await ServersContext.ServersDetails.FirstOrDefaultAsync(x => x.ServerId.Equals(id));
     }
 
     public async Task Edit(string id, Action<ServerDetails> editor)
     {
-        if (id is null) throw new ArgumentNullException(nameof(id));
-        if (editor is null) throw new ArgumentNullException(nameof(editor));
+        ArgumentNullException.ThrowIfNullOrEmpty(id);
+        ArgumentNullException.ThrowIfNull(editor);
 
         var details = await GetByServerId(id);
         if (details == null) return;

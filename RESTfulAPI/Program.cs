@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using RESTfulAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ServersContext>();
+builder.Services.AddDbContext<ServersContext>(ConfigureApplicationContextOptions); 
+builder.Services.AddDbContext<ChannelsContext>(ConfigureApplicationContextOptions);
 builder.Services.AddScoped<IServersGateway, ServersGateway>();
-
 var app = builder.Build();
+
+builder.Configuration.GetConnectionString("Database");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -30,3 +34,8 @@ app.MapControllers();
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.Run();
+
+void ConfigureApplicationContextOptions(DbContextOptionsBuilder options)
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("Database"));
+}
