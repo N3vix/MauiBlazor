@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using RESTfulAPI;
 
 var builder = WebApplication.CreateBuilder(args);

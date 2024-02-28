@@ -7,8 +7,14 @@ public class ChannelsContext : ApplicationContext
 {
     public DbSet<ChannelDetails> ChannelsDetails => Set<ChannelDetails>();
 
-
     public ChannelsContext(DbContextOptions options)
         : base(options)
     { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<ChannelDetails>().ToTable(nameof(ChannelDetails));
+    }
 }
