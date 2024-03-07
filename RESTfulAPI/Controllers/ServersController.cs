@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using RESTfulAPI;
-using RESTfulAPI.Controllers;
 
 namespace MauiBlazor.Services;
 

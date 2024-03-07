@@ -5,9 +5,20 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiBlazor", "MauiBlazor\MauiBlazor.csproj", "{DC4E5FD0-CB38-47A3-AE9E-73F1253F1BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTfulAPI", "RESTfulAPI\RESTfulAPI.csproj", "{76B0F5E3-9F22-4C91-B671-FEA87C3610C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTfulAPI", "RESTfulAPI\RESTfulAPI.csproj", "{76B0F5E3-9F22-4C91-B671-FEA87C3610C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{57628ACA-EB09-43A5-B8EC-C28EFAE56C47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{57628ACA-EB09-43A5-B8EC-C28EFAE56C47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{7493EB3F-972E-4DD1-A2F4-6C5B29E51BD5}"
+	ProjectSection(SolutionItems) = preProject
+		K6Scripts\basic-test.js = K6Scripts\basic-test.js
+		K6Scripts\config.js = K6Scripts\config.js
+		K6Scripts\load-test.js = K6Scripts\load-test.js
+		K6Scripts\smoke-test.js = K6Scripts\smoke-test.js
+		K6Scripts\soak-test.js = K6Scripts\soak-test.js
+		K6Scripts\spike-test.js = K6Scripts\spike-test.js
+		K6Scripts\stress-test.js = K6Scripts\stress-test.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

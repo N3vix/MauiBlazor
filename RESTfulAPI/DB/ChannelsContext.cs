@@ -7,7 +7,7 @@ public class ChannelsContext : ApplicationContext
 {
     public DbSet<ChannelDetails> ChannelsDetails => Set<ChannelDetails>();
 
-    public ChannelsContext(DbContextOptions options)
+    public ChannelsContext(DbContextOptions<ChannelsContext> options)
         : base(options)
     { }
 
