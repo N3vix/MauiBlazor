@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using RESTfulAPI;
 
@@ -6,6 +7,7 @@ namespace MauiBlazor.Services;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class ServersController : ControllerBase
 {
     private ILogger<ServersController> Logger { get; }
